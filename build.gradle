@@ -1,0 +1,80 @@
+buildscript {
+	ext {
+		springBootVersion = '2.1.1.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+plugins {
+	id "pmd"
+	id "checkstyle"
+	id "com.github.spotbugs" version "1.6.8"
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.takahiro310'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+def junitVersion = '5.3.2'
+
+dependencies {
+	implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+	implementation('org.springframework.boot:spring-boot-starter-jdbc')
+	implementation('org.springframework.boot:spring-boot-starter-security')
+	implementation('org.springframework.boot:spring-boot-starter-thymeleaf')
+	implementation('org.springframework.boot:spring-boot-starter-web')
+	implementation('org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.2')
+	runtimeOnly('org.springframework.boot:spring-boot-devtools')
+	runtimeOnly('mysql:mysql-connector-java')
+	compileOnly('org.projectlombok:lombok')
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+	testImplementation('org.springframework.security:spring-security-test')
+
+	// JUnit
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junitVersion
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion
+    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: junitVersion
+}
+
+test {
+    // gradle buildの時にJUnit5を使うようにする
+    useJUnitPlatform()
+    // テストの並列実行スレッド数
+    maxParallelForks = 4
+}
+
+def checkstyleVersion = '8.10.1'
+checkstyle {
+    toolVersion = checkstyleVersion
+    configFile = rootProject.file('checkstyle.xml')
+    configProperties = [
+            'checkstyle.cache.file': "${buildDir}/checkstyle.cache",
+    ]
+    ignoreFailures = true
+}
+
+def spotbugsVersion = '3.1.9'
+spotbugs {
+  toolVersion = spotbugsVersion
+}
+
+// To generate an HTML report instead of XML
+tasks.withType(com.github.spotbugs.SpotBugsTask) {
+  reports {
+    xml.enabled = false
+    html.enabled = true
+  }
+}
