@@ -15,3 +15,13 @@ Dependencies
 * MyBatis
 * MySQL
 * JDBC
+
+
+Build environment
+---
+* Java 1.8
+* Gradle 5.1
+
+Eclipseでプロジェクトを開く
+---
+ファイル＞インポート＞既存のGradleプロジェクト
