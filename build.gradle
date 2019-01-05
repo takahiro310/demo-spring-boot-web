@@ -44,9 +44,8 @@ dependencies {
 	testImplementation('org.springframework.security:spring-security-test')
 
 	// JUnit
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junitVersion
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junitVersion
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: junitVersion
+    testImplementation('org.junit.jupiter:junit-jupiter-api')
+    testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine')
 }
 
 test {
@@ -68,7 +67,7 @@ checkstyle {
 
 def spotbugsVersion = '3.1.9'
 spotbugs {
-  toolVersion = spotbugsVersion
+    toolVersion = spotbugsVersion
 }
 
 // To generate an HTML report instead of XML
