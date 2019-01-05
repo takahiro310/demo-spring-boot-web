@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Spring Boot Sample Site</title>
+</head>
+<body th:object="${testForm}">
+	<div th:replace="common/default :: header"></div>
+	<div>
+		<form th:action="@{/test/create}" th:method="post">
+			<ul>
+				<li th:each="e : ${#fields.detailedErrors()}">
+				<span th:text="${e.message}">Error message</span>
+				</li>
+			</ul>
+			<!-- <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name error</span> -->
+			<label class="control-label">名前</label>
+			<input class="form-control" type="text" name="name" th:errorclass="error-field" />
+			<button class="btn btn-default" type="submit">作成</button>
+		</form>
+	</div>
+	<div th:replace="common/default :: footer"></div>
+</body>
+</html>

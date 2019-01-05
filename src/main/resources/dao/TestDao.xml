@@ -4,4 +4,16 @@
     <select id="selectAll" resultType="com.takahiro310.demospringbootweb.domain.TestBean">
         select * from test
     </select>
+
+    <select id="findByName" resultType="com.takahiro310.demospringbootweb.domain.TestBean" parameterType="String">
+    	select * from test where name = #{name}
+    </select>
+
+    <insert id="insert" parameterType="String">
+        insert into test (name) values (#{name})
+    </insert>
+
+    <delete id="delete" parameterType="Long">
+        delete from test where id = #{id}
+    </delete>
 </mapper>
